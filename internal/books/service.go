@@ -30,6 +30,9 @@ func (s *DefaultBooksService) GetMetrics(ctx context.Context, author string) (Me
 		return Metrics{}, fmt.Errorf("fetching books: %w", err)
 	}
 
+	// TODO: Consider implementing a caching layer here to avoid repeated calls to the provider.
+	// Cache could be time-based (TTL) or invalidated on demand via a separate method.
+
 	if len(books) == 0 {
 		return Metrics{}, fmt.Errorf("no books available")
 	}
