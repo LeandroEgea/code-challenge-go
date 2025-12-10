@@ -30,3 +30,4 @@ Tests:
 Next steps (short):
 - Implement a caching layer in the service: fetch from the `HTTPBooksProvider` once and cache the result for subsequent calls (TTL or in-memory cache) to reduce remote calls.
 - Add metrics and structured logging: capture request counts, latency, and provider errors; emit structured logs (e.g., JSON) to make debugging and observability easier.
+- Improve author handling: move author filtering into the provider (accept an `author` parameter in `HTTPBooksProvider`) and remove author-filtering logic from the service so the service computes metrics only for the books it receives.
