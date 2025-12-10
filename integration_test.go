@@ -14,14 +14,16 @@ func TestIntegration_RealAPIResponse(t *testing.T) {
 	// Mock server with real API response
 	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(`[
+		if _, err := w.Write([]byte(`[
 			{"id":1,"name":"The Fellowship of the Ring","author":"J.R.R. Tolkien","units_sold":50000000,"price":20},
 			{"id":2,"name":"The Two Towers","author":"J.R.R. Tolkien","units_sold":30000000,"price":20},
 			{"id":3,"name":"The Return of the King","author":"J.R.R. Tolkien","units_sold":50000000,"price":20},
 			{"id":4,"name":"The Lion, the Witch and the Wardrobe","author":"C.S. Lewis","units_sold":85000000,"price":15},
 			{"id":5,"name":"A Wizard of Earthsea","author":"Ursula K. Le Guin","units_sold":1000000,"price":10},
 			{"id":6,"name":"The Hobbit","author":"J.R.R. Tolkien","units_sold":140000000,"price":25}
-		]`))
+		]`)); err != nil {
+			t.Logf("write error: %v", err)
+		}
 	}))
 	defer srv.Close()
 

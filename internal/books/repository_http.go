@@ -35,7 +35,11 @@ func (p *HTTPBooksProvider) GetBooks(ctx context.Context) ([]Book, error) {
 	if err != nil {
 		return nil, fmt.Errorf("request failed: %w", err)
 	}
-	defer resp.Body.Close()
+	defer func() {
+		if err := resp.Body.Close(); err != nil {
+			fmt.Printf("error closing response body: %v\n", err)
+		}
+	}()
 
 	if resp.StatusCode != http.StatusOK {
 		// read body for debugging but cap the size

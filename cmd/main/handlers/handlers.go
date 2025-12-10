@@ -22,7 +22,10 @@ type GetMetrics struct {
 func (h GetMetrics) Handle() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var query GetMetricsRequest
-		ctx.ShouldBindQuery(&query) // not checking error for brevity
+		if err := ctx.ShouldBindQuery(&query); err != nil {
+			ctx.JSON(http.StatusBadRequest, map[string]interface{}{"error": "invalid query parameters"})
+			return
+		}
 
 		metrics, err := h.booksService.GetMetrics(ctx.Request.Context(), query.Author)
 		if err != nil {

@@ -12,10 +12,12 @@ import (
 func TestHTTPBooksProvider_Success(t *testing.T) {
 	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(`[
+		if _, err := w.Write([]byte(`[
             {"id":1,"name":"The Go Programming Language","author":"Alan Donovan","units_sold":5000,"price":40},
             {"id":2,"name":"Clean Code","author":"Robert C. Martin","units_sold":15000,"price":50}
-        ]`))
+        ]`)); err != nil {
+			t.Logf("write error: %v", err)
+		}
 	}))
 	defer srv.Close()
 
@@ -35,7 +37,9 @@ func TestHTTPBooksProvider_Success(t *testing.T) {
 func TestHTTPBooksProvider_Non200(t *testing.T) {
 	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte("server error"))
+		if _, err := w.Write([]byte("server error")); err != nil {
+			t.Logf("write error: %v", err)
+		}
 	}))
 	defer srv.Close()
 
@@ -49,7 +53,9 @@ func TestHTTPBooksProvider_Non200(t *testing.T) {
 func TestHTTPBooksProvider_InvalidJSON(t *testing.T) {
 	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte("not a json"))
+		if _, err := w.Write([]byte("not a json")); err != nil {
+			t.Logf("write error: %v", err)
+		}
 	}))
 	defer srv.Close()
 

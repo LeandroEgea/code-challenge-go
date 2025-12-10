@@ -25,7 +25,9 @@ func TestGetMetrics_OK(t *testing.T) {
 	r.ServeHTTP(res, req)
 
 	var resBody map[string]interface{}
-	json.Unmarshal(res.Body.Bytes(), &resBody)
+	if err := json.Unmarshal(res.Body.Bytes(), &resBody); err != nil {
+		t.Fatalf("failed to unmarshal response: %v", err)
+	}
 
 	assert.Equal(t, 5000, int(resBody["mean_units_sold"].(float64)))
 	assert.Equal(t, "The Go Programming Language", resBody["cheapest_book"])
@@ -47,7 +49,9 @@ func TestGetMetrics_ServiceError(t *testing.T) {
 	assert.Equal(t, http.StatusBadGateway, res.Code)
 
 	var resBody map[string]interface{}
-	json.Unmarshal(res.Body.Bytes(), &resBody)
+	if err := json.Unmarshal(res.Body.Bytes(), &resBody); err != nil {
+		t.Fatalf("failed to unmarshal response: %v", err)
+	}
 	assert.NotNil(t, resBody["error"])
 }
 
@@ -64,7 +68,9 @@ func TestGetMetrics_NoAuthorFilter(t *testing.T) {
 	r.ServeHTTP(res, req)
 
 	var resBody map[string]interface{}
-	json.Unmarshal(res.Body.Bytes(), &resBody)
+	if err := json.Unmarshal(res.Body.Bytes(), &resBody); err != nil {
+		t.Fatalf("failed to unmarshal response: %v", err)
+	}
 
 	assert.Equal(t, http.StatusOK, res.Code)
 	assert.Equal(t, 11000, int(resBody["mean_units_sold"].(float64)))
