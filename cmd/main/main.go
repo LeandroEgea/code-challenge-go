@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 
-	"educabot.com/bookshop/handlers"
-	"educabot.com/bookshop/repositories/mockImpls"
+	"educabot.com/bookshop/cmd/main/handlers"
+	"educabot.com/bookshop/internal/repositories/mockImpls"
 	"github.com/gin-gonic/gin"
 )
 

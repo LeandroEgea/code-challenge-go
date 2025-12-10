@@ -3,7 +3,7 @@ package mockImpls
 import (
 	"context"
 
-	"educabot.com/bookshop/models"
+	"educabot.com/bookshop/internal/models"
 )
 
 //comentario

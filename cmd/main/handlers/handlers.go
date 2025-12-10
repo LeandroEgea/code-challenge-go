@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"slices"
 
-	"educabot.com/bookshop/models"
-	"educabot.com/bookshop/providers"
+	"educabot.com/bookshop/internal/models"
+	"educabot.com/bookshop/internal/providers"
 	"github.com/gin-gonic/gin"
 )
 

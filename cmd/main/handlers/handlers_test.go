@@ -6,7 +6,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"educabot.com/bookshop/repositories/mockImpls"
+	"educabot.com/bookshop/internal/repositories/mockImpls"
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
 )

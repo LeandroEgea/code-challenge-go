@@ -3,7 +3,7 @@ package providers
 import (
 	"context"
 
-	"educabot.com/bookshop/models"
+	"educabot.com/bookshop/internal/models"
 )
 
 type BooksProvider interface {
