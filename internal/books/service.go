@@ -6,16 +6,6 @@ import (
 	"slices"
 )
 
-type Metrics struct {
-	MeanUnitsSold        uint   `json:"mean_units_sold"`
-	CheapestBook         string `json:"cheapest_book"`
-	BooksWrittenByAuthor uint   `json:"books_written_by_author"`
-}
-
-type BooksService interface {
-	GetMetrics(ctx context.Context, author string) (Metrics, error)
-}
-
 type DefaultBooksService struct {
 	provider BooksProvider
 }

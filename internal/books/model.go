@@ -7,3 +7,9 @@ type Book struct {
 	UnitsSold uint   `json:"units_sold"`
 	Price     uint   `json:"price"`
 }
+
+type Metrics struct {
+	MeanUnitsSold        uint   `json:"mean_units_sold"`
+	CheapestBook         string `json:"cheapest_book"`
+	BooksWrittenByAuthor uint   `json:"books_written_by_author"`
+}
