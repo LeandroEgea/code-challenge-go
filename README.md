@@ -30,5 +30,3 @@ Tests:
 Next steps (short):
 - Implement a caching layer in the service: fetch from the `HTTPBooksProvider` once and cache the result for subsequent calls (TTL or in-memory cache) to reduce remote calls.
 - Add metrics and structured logging: capture request counts, latency, and provider errors; emit structured logs (e.g., JSON) to make debugging and observability easier.
-
-If you want, I can add a small in-memory cache implementation in `internal/books/service.go` (with TTL) and wire basic metrics/logging next.
