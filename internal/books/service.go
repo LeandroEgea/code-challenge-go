@@ -48,7 +48,13 @@ func meanUnitsSold(books []Book) uint {
 
 func cheapestBook(books []Book) Book {
 	return slices.MinFunc(books, func(a, b Book) int {
-		return int(a.Price - b.Price)
+		if a.Price < b.Price {
+			return -1
+		}
+		if a.Price > b.Price {
+			return 1
+		}
+		return 0
 	})
 }
 
