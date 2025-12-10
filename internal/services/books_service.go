@@ -37,25 +37,9 @@ func (s *DefaultBooksService) GetMetrics(ctx context.Context, author string) (Me
 		return Metrics{}, fmt.Errorf("no books available")
 	}
 
-	// mean units sold
-	var sum uint
-	for _, b := range books {
-		sum += b.UnitsSold
-	}
-	mean := sum / uint(len(books))
-
-	// cheapest
-	cheapest := slices.MinFunc(books, func(a, b models.Book) int {
-		return int(a.Price - b.Price)
-	})
-
-	// count by author
-	var count uint
-	for _, b := range books {
-		if b.Author == author {
-			count++
-		}
-	}
+	mean := meanUnitsSold(books)
+	cheapest := cheapestBook(books)
+	count := booksWrittenByAuthor(books, author)
 
 	return Metrics{
 		MeanUnitsSold:        mean,
