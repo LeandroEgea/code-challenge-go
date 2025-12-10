@@ -27,11 +27,15 @@ func (h GetMetrics) Handle() gin.HandlerFunc {
 		var query GetMetricsRequest
 		ctx.ShouldBindQuery(&query) // this returns error
 
-		books := h.booksProvider.GetBooks(context.Background())
+		books, err := h.booksProvider.GetBooks(ctx.Request.Context())
+		if err != nil {
+			ctx.JSON(http.StatusBadGateway, map[string]interface{}{"error": err.Error()})
+			return
+		}
 
-		meanUnitsSold := meanUnitsSold(ctx, books)
-		cheapestBook := cheapestBook(ctx, books).Name
-		booksWrittenByAuthor := booksWrittenByAuthor(ctx, books, query.Author)
+		meanUnitsSold := meanUnitsSold(ctx.Request.Context(), books)
+		cheapestBook := cheapestBook(ctx.Request.Context(), books).Name
+		booksWrittenByAuthor := booksWrittenByAuthor(ctx.Request.Context(), books, query.Author)
 
 		ctx.JSON(http.StatusOK, map[string]interface{}{
 			"mean_units_sold":         meanUnitsSold,
