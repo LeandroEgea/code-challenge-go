@@ -27,7 +27,7 @@ func TestGetMetrics_OK(t *testing.T) {
 	var resBody map[string]interface{}
 	json.Unmarshal(res.Body.Bytes(), &resBody)
 
-	assert.Equal(t, 11000, int(resBody["mean_units_sold"].(float64)))
+	assert.Equal(t, 5000, int(resBody["mean_units_sold"].(float64)))
 	assert.Equal(t, "The Go Programming Language", resBody["cheapest_book"])
 	assert.Equal(t, 1, int(resBody["books_written_by_author"].(float64)))
 }

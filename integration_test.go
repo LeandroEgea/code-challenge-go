@@ -92,7 +92,8 @@ func TestIntegration_RealAPIResponse(t *testing.T) {
 		metrics, err := service.GetMetrics(context.Background(), "Non Existent")
 		assert.NoError(t, err, "service should not error for non-existent author")
 		assert.Equal(t, uint(0), metrics.BooksWrittenByAuthor, "non-existent author should match 0 books")
-		assert.Equal(t, "A Wizard of Earthsea", metrics.CheapestBook, "cheapest book is A Wizard of Earthsea (price 10)")
+		assert.Equal(t, uint(0), metrics.MeanUnitsSold, "non-existent author should have 0 mean units sold")
+		assert.Equal(t, "", metrics.CheapestBook, "non-existent author should have empty cheapest book")
 		t.Logf("Non-existent author metrics: mean=%d, cheapest=%s, count=%d",
 			metrics.MeanUnitsSold, metrics.CheapestBook, metrics.BooksWrittenByAuthor)
 	})

@@ -15,7 +15,7 @@ func TestDefaultBooksService_GetMetrics_Success(t *testing.T) {
 		t.Fatalf("unexpected error: %v", err)
 	}
 
-	if metrics.MeanUnitsSold != 11000 {
+	if metrics.MeanUnitsSold != 5000 {
 		t.Fatalf("unexpected mean units sold: %d", metrics.MeanUnitsSold)
 	}
 	if metrics.CheapestBook != "The Go Programming Language" {

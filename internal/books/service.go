@@ -27,9 +27,29 @@ func (s *DefaultBooksService) GetMetrics(ctx context.Context, author string) (Me
 		return Metrics{}, fmt.Errorf("no books available")
 	}
 
-	mean := meanUnitsSold(books)
-	cheapest := cheapestBook(books)
-	count := booksWrittenByAuthor(books, author)
+	// Filter books by author if specified
+	var booksToAnalyze []Book
+	if author != "" {
+		for _, b := range books {
+			if b.Author == author {
+				booksToAnalyze = append(booksToAnalyze, b)
+			}
+		}
+		// If author filter specified but no books found, return metrics with zeros
+		if len(booksToAnalyze) == 0 {
+			return Metrics{
+				MeanUnitsSold:        0,
+				CheapestBook:         "",
+				BooksWrittenByAuthor: 0,
+			}, nil
+		}
+	} else {
+		booksToAnalyze = books
+	}
+
+	mean := meanUnitsSold(booksToAnalyze)
+	cheapest := cheapestBook(booksToAnalyze)
+	count := booksWrittenByAuthor(booksToAnalyze, author)
 
 	return Metrics{
 		MeanUnitsSold:        mean,
