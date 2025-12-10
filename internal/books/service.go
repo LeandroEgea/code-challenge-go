@@ -1,12 +1,9 @@
-package services
+package books
 
 import (
 	"context"
 	"fmt"
 	"slices"
-
-	"educabot.com/bookshop/internal/models"
-	"educabot.com/bookshop/internal/providers"
 )
 
 type Metrics struct {
@@ -20,10 +17,10 @@ type BooksService interface {
 }
 
 type DefaultBooksService struct {
-	provider providers.BooksProvider
+	provider BooksProvider
 }
 
-func NewBooksService(p providers.BooksProvider) *DefaultBooksService {
+func NewBooksService(p BooksProvider) *DefaultBooksService {
 	return &DefaultBooksService{provider: p}
 }
 
@@ -48,7 +45,7 @@ func (s *DefaultBooksService) GetMetrics(ctx context.Context, author string) (Me
 	}, nil
 }
 
-func meanUnitsSold(books []models.Book) uint {
+func meanUnitsSold(books []Book) uint {
 	var sum uint
 	for _, book := range books {
 		sum += book.UnitsSold
@@ -56,13 +53,13 @@ func meanUnitsSold(books []models.Book) uint {
 	return sum / uint(len(books))
 }
 
-func cheapestBook(books []models.Book) models.Book {
-	return slices.MinFunc(books, func(a, b models.Book) int {
+func cheapestBook(books []Book) Book {
+	return slices.MinFunc(books, func(a, b Book) int {
 		return int(a.Price - b.Price)
 	})
 }
 
-func booksWrittenByAuthor(books []models.Book, author string) uint {
+func booksWrittenByAuthor(books []Book, author string) uint {
 	var count uint
 	for _, book := range books {
 		if book.Author == author {

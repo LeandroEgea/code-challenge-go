@@ -3,7 +3,7 @@ package handlers
 import (
 	"net/http"
 
-	"educabot.com/bookshop/internal/services"
+	"educabot.com/bookshop/internal/books"
 	"github.com/gin-gonic/gin"
 )
 
@@ -11,12 +11,12 @@ type GetMetricsRequest struct {
 	Author string `form:"author"`
 }
 
-func NewGetMetrics(booksService services.BooksService) GetMetrics {
+func NewGetMetrics(booksService books.BooksService) GetMetrics {
 	return GetMetrics{booksService}
 }
 
 type GetMetrics struct {
-	booksService services.BooksService
+	booksService books.BooksService
 }
 
 func (h GetMetrics) Handle() gin.HandlerFunc {

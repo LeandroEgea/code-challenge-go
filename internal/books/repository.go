@@ -1,4 +1,4 @@
-package providers
+package books
 
 import (
 	"context"
@@ -7,8 +7,6 @@ import (
 	"io"
 	"net/http"
 	"time"
-
-	"educabot.com/bookshop/internal/models"
 )
 
 type HTTPBooksProvider struct {
@@ -27,7 +25,7 @@ func NewHTTPBooksProvider(endpoint string) *HTTPBooksProvider {
 }
 
 // GetBooks fetches books from the remote endpoint, validates the payload and returns parsed books or an error.
-func (p *HTTPBooksProvider) GetBooks(ctx context.Context) ([]models.Book, error) {
+func (p *HTTPBooksProvider) GetBooks(ctx context.Context) ([]Book, error) {
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, p.endpoint, nil)
 	if err != nil {
 		return nil, fmt.Errorf("creating request: %w", err)
@@ -63,7 +61,7 @@ func (p *HTTPBooksProvider) GetBooks(ctx context.Context) ([]models.Book, error)
 		return nil, fmt.Errorf("invalid json: %w", err)
 	}
 
-	books := make([]models.Book, 0, len(raw))
+	books := make([]Book, 0, len(raw))
 	for i, r := range raw {
 		// parse numeric fields defensively
 		id64, err := r.ID.Int64()
@@ -86,7 +84,7 @@ func (p *HTTPBooksProvider) GetBooks(ctx context.Context) ([]models.Book, error)
 			return nil, fmt.Errorf("invalid numeric values at index %d", i)
 		}
 
-		books = append(books, models.Book{
+		books = append(books, Book{
 			ID:        uint(id64),
 			Name:      r.Name,
 			Author:    r.Author,

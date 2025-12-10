@@ -6,15 +6,14 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"educabot.com/bookshop/internal/repositories/mockImpls"
-	"educabot.com/bookshop/internal/services"
+	"educabot.com/bookshop/internal/books"
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestGetMetrics_OK(t *testing.T) {
 	gin.SetMode(gin.TestMode)
-	service := services.NewBooksService(mockImpls.NewMockBooksProvider())
+	service := books.NewBooksService(books.NewMockBooksProvider())
 	handler := NewGetMetrics(service)
 
 	r := gin.Default()
